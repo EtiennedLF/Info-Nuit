@@ -8,6 +8,48 @@ var nombreNon;
 var nomActeur = "Emmilie";
 var repository = "repoLibTer";
 
+
+var dico = new Map();
+dico.set("repoLibTer/acteur1.txt","emilie")
+dico.set("repoLibTer/acteur2.txt","emilie")
+dico.set("repoLibTer/text-1.txt","Hey on à fini notre journée !")
+dico.set("repoLibTer/text-2.txt","Viens on sort cette aprem !!")
+
+dico.set("repolib/acteur1.txt","emilie")
+dico.set("repolib/acteur2.txt","emilie")
+dico.set("repolib/acteur3.txt","inconnu")
+dico.set("repolib/acteur4.txt","inconnu")
+dico.set("repolib/acteur5.txt","emilie")
+dico.set("repolib/acteur6.txt","inconnu")
+dico.set("repolib/text-1.txt"," Ah on est enfin arrivé ! regarder il reste une place avec cette étudiante là bas.")
+dico.set("repolib/text-2.txt","Bonjour, est-ce qu’on peut se joindre à toi ?")
+dico.set("repolib/text-3.txt"," Bien sûr pas de soucis !")
+dico.set("repolib/text-4.txt","Ce soir je vais en boîte avec un ami, ça vous dit de venir ?")
+dico.set("repolib/text-5.txt"," Avec plaisir, on avait justement envie de sortir !")
+dico.set("repolib/text-6.txt","Oh voilà mon ami, c'est Roberto avec qui on sort ce soir.")
+
+dico.set("repoTer/acteur1.txt","inconnu")
+dico.set("repoTer/acteur2.txt","emilie")
+dico.set("repoTer/acteur3.txt","inconnu")
+dico.set("repoTer/acteur4.txt","emilie")
+dico.set("repoTer/acteur5.txt","inconnu")
+dico.set("repoTer/acteur6.txt","emilie")
+dico.set("repoTer/acteur7.txt","inconnu")
+dico.set("repoTer/acteur8.txt","inconnu")
+dico.set("repoTer/text-1.txt"," Bonjour, qu’est-ce que je vous sers ?")
+dico.set("repoTer/text-2.txt","On prendra 2 demi-pêches !")
+dico.set("repoTer/text-3.txt","Très bien !")
+dico.set("repoTer/text-4.txt","Il est plutôt pas mal non ? ")
+dico.set("repoTer/text-5.txt","Et voilà 2 demi-pêches, autre chose avec ceci ?")
+dico.set("repoTer/text-6.txt","Merci, votre snap serait le bienvenue hi hi")
+dico.set("repoTer/text-7.txt","Je sors ce soir avec des amis, rejoignez-nous et je vous le donnerai ;)")
+dico.set("repoTer/text-8.txt","Oh tiens voilà mon ami Anna")
+
+
+
+
+
+
 function getNom(nom){
     switch(nom) {
         case "inconnu" :
@@ -95,8 +137,9 @@ document.addEventListener("DOMContentLoaded", function(){
 function readTextFile(repository, ficname, i) { 
      allText = "";
         var rawFile = new XMLHttpRequest();
-        //rawFile.open("GET",repository +"/" + ficname + i + ".txt", false);
-        rawFile.open("GET","repoLibTer/acteur1.txt", false);
+    
+        rawFile.open("GET",repository +"/" + ficname + i + ".txt", false);
+        //rawFile.open("GET","/home/clement/Documents/GitHub/Info-Nuit/repoLibTer/acteur1.txt", true);
         rawFile.onreadystatechange = function () {
             console.log("coucou");
             if(rawFile.readyState === 4) {
@@ -105,12 +148,11 @@ function readTextFile(repository, ficname, i) {
                     console.log(allText);
                 }
             }
-        return allText;
-        
         rawFile.send(null);
     }
+    return allText;
 }
-
+/*
 function uneFenetre(repository, i){
     try{
         var rawFile = new XMLHttpRequest();
@@ -132,24 +174,50 @@ function uneFenetre(repository, i){
         return false;
     }
 }
+*/
+
+function uneFenetre(repository, i){
+    if (dico.has(repository +"/acteur" + i +".txt")){
+        var rawFile = new XMLHttpRequest();
+        
+        var nom = dico.get(repository +"/acteur" + i +".txt");
+        if (nom == "inconnu" || nom == "pot_inconnu"){
+            nom = getNom(nom);
+        }
+        setText(dico.get(repository +"/text-" + i +".txt"), nom);
+        //console.log(readTextFile(repository, "acteur", i));
+        setPerso(getURL(nom));
+        setVisible(boutonSuivant, "visible");
+        return true;
+    }
+    else {
+        setVisible(boutonSuivant, "hidden");
+        setVisible(bouton1, "visible");
+        setVisible(bouton2, "visible");
+        return false;
+    }
+}
+
+
 function butonsInvisible(){
     setVisible(bouton1, "hidden");
     setVisible(bouton2, "hidden");
 }
 
-$('#boutonSuivant').onclick = function() {
+$('#BoutonSuivant').click(function() {
     if (uneFenetre(repository, numero)){
+        //uneFenetre(repository, numero)
         numero++;
     }else {
         switch(repository){
             case "repoLibTer":
+                bouton1.style.visibility = "visible";
                 bouton1.onclick = function(){
                    repository = "repolib" 
                    setFond(getURL("bibli"))
                    setBouton1("oui");
                    setBouton2("non");
                    butonsInvisible()
-                   nomActeur = "Julie"
                    sexeRencontre = "f"
                 }
                 bouton2.onclick = function(){
@@ -158,7 +226,6 @@ $('#boutonSuivant').onclick = function() {
                     setBouton1("oui");
                     setBouton2("non");
                     butonsInvisible()
-                    nomActeur = "Roberd"
                     sexeRencontre = "m"
                  }
                 break;
@@ -338,4 +405,4 @@ $('#boutonSuivant').onclick = function() {
                 break;
         }
     }
-}
+});
