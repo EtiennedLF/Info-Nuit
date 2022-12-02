@@ -19,6 +19,13 @@
                 inset 0 0 0 1px black;
   }
 
+  #BoutonSuivant{
+    background-color: #80c1fa00;
+    width: 85%;
+    z-index: 5;
+    color:#80c1fa00;
+  }
+
 #fond {
     background-size: cover;
     width: 100%;
