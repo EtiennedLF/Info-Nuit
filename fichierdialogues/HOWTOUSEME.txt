@@ -1,0 +1,6 @@
+bff fait référence à émilie
+inconnu fait référence à la personne qu'on a décidé d'accompagner en boîte de nuit
+pote_inconnu fait référence à l'ami(e) de sexe opposé de l'inconnu(e)
+crush fait référence a la personne chez qui nous décidons d'aller dormir
+
+ce sont des variables globales qui sont doivent être modifiées dynamiquement au fur à mesure du jeu et qui contiennnent les prénoms des personnages
