@@ -8,7 +8,7 @@ var nombreNon;
 var nomActeur = "Emmilie";
 var repository = "repoLibTer";
 
-
+//déso pour le dico on a eut un problème pour lire les fichiers texte ... 
 var dico = new Map();
 dico.set("repoLibTer/acteur1.txt","emilie")
 dico.set("repoLibTer/acteur2.txt","emilie")
